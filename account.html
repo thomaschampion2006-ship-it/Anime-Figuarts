@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mon Compte – Anime Figuarts</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="logo-img"
+             onerror="this.outerHTML='<div class=\'logo-text\'><span class=\'logo-top\'>Anime</span><span class=\'logo-bottom\'>Figuarts</span></div>'" />
+      </a>
+      <form class="search-form" onsubmit="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Rechercher..." class="search-input" />
+        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+      </form>
+      <div class="header-actions">
+        <a href="account.html" class="header-icon active" id="accountLink" title="Mon compte"><i class="fas fa-user"></i></a>
+        <a href="cart.html" class="header-icon cart-icon" title="Panier">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="products.html?category=new" class="nav-link">NOUVEAUTÉS</a></li>
+        <li><a href="figurines.html" class="nav-link">FIGURINES</a></li>
+        <li><a href="pokemon.html" class="nav-link">POKÉMON</a></li>
+        <li><a href="katanas.html" class="nav-link">KATANAS</a></li>
+        <li><a href="products.html?category=librairie" class="nav-link">LIBRAIRIE</a></li>
+        <li><a href="products.html?category=goodies" class="nav-link">GOODIES</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="account-page">
+    <div class="account-layout">
+      <!-- SIDEBAR -->
+      <aside class="account-sidebar">
+        <div class="account-avatar">
+          <div class="avatar-circle" id="avatarCircle">?</div>
+          <p class="avatar-name" id="avatarName">Chargement…</p>
+          <p class="avatar-email" id="avatarEmail"></p>
+        </div>
+        <nav class="account-nav">
+          <button class="account-nav-btn active" onclick="showSection('dashboard')" id="nav-dashboard">
+            <i class="fas fa-home"></i> Tableau de bord
+          </button>
+          <button class="account-nav-btn" onclick="showSection('orders')" id="nav-orders">
+            <i class="fas fa-box"></i> Mes commandes
+          </button>
+          <button class="account-nav-btn" onclick="showSection('fidelite')" id="nav-fidelite">
+            <i class="fas fa-star"></i> Programme fidélité
+          </button>
+          <button class="account-nav-btn" onclick="showSection('profile')" id="nav-profile">
+            <i class="fas fa-user-edit"></i> Mon profil
+          </button>
+          <button class="account-nav-btn logout-btn" onclick="doLogout()">
+            <i class="fas fa-sign-out-alt"></i> Se déconnecter
+          </button>
+        </nav>
+      </aside>
+
+      <!-- CONTENU -->
+      <div class="account-content">
+        <!-- TABLEAU DE BORD -->
+        <div class="account-section active" id="section-dashboard">
+          <h2 class="account-section-title">Tableau de bord</h2>
+          <div class="dashboard-stats">
+            <div class="stat-card">
+              <i class="fas fa-box"></i>
+              <span class="stat-value" id="statOrders">0</span>
+              <span class="stat-label">Commandes</span>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-euro-sign"></i>
+              <span class="stat-value" id="statSpent">0€</span>
+              <span class="stat-label">Total dépensé</span>
+            </div>
+            <div class="stat-card" style="background:#fff8e1;border-color:#ffe082">
+              <i class="fas fa-star" style="color:#ffd600"></i>
+              <span class="stat-value" id="statPoints" style="color:#8d6e00">0</span>
+              <span class="stat-label">Points fidélité</span>
+            </div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:12px;padding:22px;color:#fff">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:8px">Bienvenue, <span id="welcomeName">?</span> !</h3>
+            <p style="font-size:13px;opacity:0.85;margin-bottom:14px">Retrouvez ici toutes vos informations et l'historique de vos commandes.</p>
+            <a href="products.html" class="hero-btn-primary" style="font-size:12px;padding:9px 20px">
+              <i class="fas fa-store"></i> Voir le catalogue
+            </a>
+          </div>
+        </div>
+
+        <!-- COMMANDES -->
+        <div class="account-section" id="section-orders">
+          <h2 class="account-section-title">Mes commandes</h2>
+          <div id="ordersList"><p style="color:var(--text-muted)">Aucune commande pour le moment.</p></div>
+        </div>
+
+        <!-- FIDÉLITÉ -->
+        <div class="account-section" id="section-fidelite">
+          <h2 class="account-section-title">Programme de fidélité</h2>
+          <div style="background:linear-gradient(135deg,#fff8e1,#fffde7);border:1.5px solid #ffe082;border-radius:12px;padding:22px;margin-bottom:22px">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+              <i class="fas fa-star" style="font-size:2.5rem;color:#ffd600"></i>
+              <div>
+                <p style="font-size:11px;color:var(--text-muted)">Vos points</p>
+                <p class="stat-value" id="fidPoints" style="font-size:2rem;font-weight:800;color:#8d6e00">0</p>
+              </div>
+            </div>
+            <div style="height:10px;background:#ffe082;border-radius:5px;overflow:hidden;margin-bottom:8px">
+              <div id="fidProgressBar" style="height:100%;background:linear-gradient(90deg,#ffd600,#ff6d00);border-radius:5px;width:0%;transition:width 0.5s ease"></div>
+            </div>
+            <p id="fidNext" style="font-size:12px;color:var(--text-muted)">Dépensez encore 20€ pour gagner votre prochain bon</p>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:14px">Vos avantages :</h3>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:#f8fafc;border-radius:8px;border:1px solid var(--border)">
+              <i class="fas fa-percent" style="font-size:1.2rem;color:var(--accent);margin-top:2px"></i>
+              <div>
+                <strong style="display:block;font-size:14px;font-weight:700;color:var(--primary);margin-bottom:3px">Cashback automatique</strong>
+                <p style="font-size:12px;color:var(--text-muted)">1€ de bon d'achat offert tous les 20€ dépensés</p>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:#f8fafc;border-radius:8px;border:1px solid var(--border)">
+              <i class="fas fa-gift" style="font-size:1.2rem;color:var(--accent);margin-top:2px"></i>
+              <div>
+                <strong style="display:block;font-size:14px;font-weight:700;color:var(--primary);margin-bottom:3px">Carte cadeau mystère</strong>
+                <p style="font-size:12px;color:var(--text-muted)">Code cadeau mystère offert dès 70€ dépensés</p>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:#f8fafc;border-radius:8px;border:1px solid var(--border)">
+              <i class="fas fa-bell" style="font-size:1.2rem;color:var(--accent);margin-top:2px"></i>
+              <div>
+                <strong style="display:block;font-size:14px;font-weight:700;color:var(--primary);margin-bottom:3px">Accès avant-première</strong>
+                <p style="font-size:12px;color:var(--text-muted)">Soyez alerté en avant-première des nouvelles figurines</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFIL -->
+        <div class="account-section" id="section-profile">
+          <h2 class="account-section-title">Mon profil</h2>
+          <form onsubmit="saveProfile(event)" style="max-width:500px">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" id="profFirst" />
+              </div>
+              <div class="form-group">
+                <label>Nom</label>
+                <input type="text" id="profLast" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="profEmail" />
+            </div>
+            <div class="form-group">
+              <label>Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+              <input type="password" id="profPwd" placeholder="••••••••" />
+            </div>
+            <p class="auth-error" id="profError"></p>
+            <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Sauvegarder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><img src="image fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="footer-logo-img" onerror="this.style.display='none'"></div>
+      <div>
+        <h4 class="footer-section-title">À propos de nous :</h4>
+        <ul class="footer-links">
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Notre histoire</a></li>
+          <li><a href="#">Qui sommes nous ?</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-section-title footer-fidelite-title">programme de fidélité :</h4>
+        <ul class="footer-fidelite-list">
+          <li><i class="fas fa-star"></i> 1€ de bon offert tous les 20 euros dépensés</li>
+          <li><i class="fas fa-gift"></i> code carte cadeau mystère après 70€ dépensé</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Anime Figuarts. Tous droits réservés.</div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Rediriger si non connecté
+    if (!isLoggedIn()) window.location.href = 'login.html';
+
+    function showSection(name) {
+      document.querySelectorAll('.account-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.account-nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('section-' + name).classList.add('active');
+      document.getElementById('nav-' + name).classList.add('active');
+    }
+
+    function doLogout() { logout(); }
+
+    function saveProfile(e) {
+      e.preventDefault();
+      const user = getUser();
+      user.firstName = document.getElementById('profFirst').value.trim();
+      user.lastName  = document.getElementById('profLast').value.trim();
+      user.email     = document.getElementById('profEmail').value.trim();
+      const newPwd   = document.getElementById('profPwd').value;
+      if (newPwd) { if (newPwd.length < 6) { document.getElementById('profError').textContent = 'Mot de passe trop court (min. 6 caractères)'; return; } user.password = newPwd; }
+      setUser(user);
+      // Mettre à jour dans la liste users
+      const users = JSON.parse(localStorage.getItem('af_users') || '[]');
+      const idx   = users.findIndex(u => u.email === user.email || u.email === document.getElementById('profEmail').value);
+      if (idx !== -1) { users[idx] = user; localStorage.setItem('af_users', JSON.stringify(users)); }
+      document.getElementById('profError').textContent = '';
+      showToast('Profil mis à jour !', 'success');
+      loadUserData();
+    }
+
+    function loadUserData() {
+      const user   = getUser();
+      const orders = JSON.parse(localStorage.getItem('af_orders') || '[]');
+      const spent  = orders.reduce((s, o) => s + (o.total || 0), 0);
+      const points = Math.floor(spent / 20);
+
+      document.getElementById('avatarCircle').textContent = (user.firstName || user.email || '?')[0].toUpperCase();
+      document.getElementById('avatarName').textContent   = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email;
+      document.getElementById('avatarEmail').textContent  = user.email;
+      document.getElementById('welcomeName').textContent  = user.firstName || user.email;
+      document.getElementById('statOrders').textContent   = orders.length;
+      document.getElementById('statSpent').textContent    = spent.toFixed(0) + '€';
+      document.getElementById('statPoints').textContent   = points;
+      document.getElementById('fidPoints').textContent    = points;
+
+      const progress = Math.min((spent % 20) / 20 * 100, 100);
+      document.getElementById('fidProgressBar').style.width = progress + '%';
+      const remaining = 20 - (spent % 20);
+      document.getElementById('fidNext').textContent = remaining < 20 ? `Encore ${remaining.toFixed(2)}€ pour votre prochain bon` : 'Dépensez 20€ pour gagner un bon';
+
+      // Commandes
+      const ol = document.getElementById('ordersList');
+      if (!orders.length) {
+        ol.innerHTML = '<p style="color:var(--text-muted)">Aucune commande pour le moment.</p>';
+      } else {
+        ol.innerHTML = orders.map(o => `
+          <div class="order-card">
+            <div class="order-card-header">
+              <span class="order-id">${o.id}</span>
+              <span class="order-status">${o.status || 'En cours'}</span>
+              <span class="order-date">${o.date}</span>
+            </div>
+            <p class="order-total">${o.total ? o.total.toFixed(2) + ' €' : 'N/A'}</p>
+          </div>`).join('');
+      }
+
+      // Pré-remplir profil
+      document.getElementById('profFirst').value = user.firstName || '';
+      document.getElementById('profLast').value  = user.lastName  || '';
+      document.getElementById('profEmail').value = user.email     || '';
+    }
+
+    document.addEventListener('DOMContentLoaded', loadUserData);
+  </script>
+</body>
+</html>

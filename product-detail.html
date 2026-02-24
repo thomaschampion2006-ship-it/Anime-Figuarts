@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Détail Produit – Anime Figuarts</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="logo-img"
+             onerror="this.outerHTML='<div class=\'logo-text\'><span class=\'logo-top\'>Anime</span><span class=\'logo-bottom\'>Figuarts</span></div>'" />
+      </a>
+      <form class="search-form" onsubmit="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Rechercher..." class="search-input" />
+        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+      </form>
+      <div class="header-actions">
+        <a href="account.html" class="header-icon" id="accountLink" title="Mon compte"><i class="fas fa-user"></i></a>
+        <a href="cart.html" class="header-icon cart-icon" title="Panier">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="products.html?category=new" class="nav-link">NOUVEAUTÉS</a></li>
+        <li><a href="figurines.html" class="nav-link">FIGURINES</a></li>
+        <li><a href="pokemon.html" class="nav-link">POKÉMON</a></li>
+        <li><a href="katanas.html" class="nav-link">KATANAS</a></li>
+        <li><a href="products.html?category=librairie" class="nav-link">LIBRAIRIE</a></li>
+        <li><a href="products.html?category=goodies" class="nav-link">GOODIES</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="detail-page" id="detailPage">
+    <div class="loading-full"><i class="fas fa-spinner fa-spin"></i> Chargement…</div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><img src="image fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="footer-logo-img" onerror="this.style.display='none'"></div>
+      <div>
+        <h4 class="footer-section-title">À propos de nous :</h4>
+        <ul class="footer-links">
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Notre histoire</a></li>
+          <li><a href="#">Qui sommes nous ?</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-section-title footer-fidelite-title">programme de fidélité :</h4>
+        <ul class="footer-fidelite-list">
+          <li><i class="fas fa-star"></i> 1€ de bon offert tous les 20 euros dépensés</li>
+          <li><i class="fas fa-gift"></i> code carte cadeau mystère après 70€ dépensé</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Anime Figuarts. Tous droits réservés.</div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    let qty = 1;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const id = getUrlParam('id');
+      const page = document.getElementById('detailPage');
+
+      if (!id) { page.innerHTML = '<p style="padding:40px;text-align:center;">Produit introuvable.</p>'; return; }
+
+      const p = getProductById(id);
+      if (!p) { page.innerHTML = '<p style="padding:40px;text-align:center;">Produit introuvable.</p>'; return; }
+
+      document.title = `${p.name} – Anime Figuarts`;
+      const imgSrc = encodeImagePath(p.image);
+      const hasOld = p.oldPrice && p.oldPrice > p.price;
+      const discount = hasOld ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+
+      const catLabels = { 'sh-figuarts': 'S.H. Figuarts', 'figurines-na': 'Figurines non articulées', 'katanas': 'Katanas' };
+      const catLinks  = { 'sh-figuarts': 'figurines.html', 'figurines-na': 'products.html?category=figurines-na', 'katanas': 'katanas.html' };
+
+      page.innerHTML = `
+        <nav class="breadcrumb">
+          <a href="index.html">Accueil</a><span>/</span>
+          <a href="${catLinks[p.category] || 'products.html'}">${catLabels[p.category] || p.category}</a><span>/</span>
+          <span>${p.name}</span>
+        </nav>
+
+        <div class="detail-container">
+          <div class="detail-image-box">
+            <img src="${imgSrc}" alt="${escHtml(p.name)}" class="detail-img"
+                 onerror="this.outerHTML='<i class=\'fas fa-image no-img-large\'></i>'" />
+            ${p.isNew ? '<span class="badge-new" style="position:absolute;top:14px;left:14px;font-size:12px;padding:4px 12px;">NOUVEAU</span>' : ''}
+          </div>
+
+          <div class="detail-info">
+            <p class="detail-series">${escHtml(p.series)}</p>
+            <h1 class="detail-name">${escHtml(p.name)}</h1>
+
+            <div class="detail-price-row">
+              <span class="detail-price">${p.price.toFixed(2)} €</span>
+              ${hasOld ? `<span class="detail-old-price">${p.oldPrice.toFixed(2)} €</span>
+              <span style="background:var(--red);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:50px;">-${discount}%</span>` : ''}
+            </div>
+
+            <div class="detail-stock">
+              <i class="fas fa-circle" style="font-size:8px"></i>
+              ${p.stock > 5 ? 'En stock' : p.stock > 0 ? `Plus que ${p.stock} en stock` : 'Rupture de stock'}
+            </div>
+
+            <p class="detail-description">${escHtml(p.description)}</p>
+
+            ${p.specs ? `<ul class="detail-specs">
+              ${p.specs.map(s => `<li><i class="fas fa-check"></i> ${escHtml(s)}</li>`).join('')}
+            </ul>` : ''}
+
+            <div class="detail-actions">
+              <div class="quantity-selector">
+                <button onclick="changeQty(-1)">−</button>
+                <span id="qtyDisplay">1</span>
+                <button onclick="changeQty(1)">+</button>
+              </div>
+              <button class="btn-add-detail" onclick="addToCartDetail(${p.id})" ${p.stock <= 0 ? 'disabled' : ''}>
+                <i class="fas fa-shopping-cart"></i> Ajouter au panier
+              </button>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:12px">
+              <a href="cart.html" class="btn-secondary" style="flex:1;justify-content:center">
+                <i class="fas fa-shopping-bag"></i> Voir le panier
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUITS SIMILAIRES -->
+        <section>
+          <h2 class="section-title" style="margin-bottom:20px">Produits similaires</h2>
+          <div class="product-row" id="related-row" style="padding-bottom:10px"></div>
+        </section>`;
+
+      // Produits similaires
+      const related = getProductsByCategory(p.category).filter(r => r.id !== p.id).slice(0, 8);
+      const relRow = document.getElementById('related-row');
+      if (related.length) relRow.innerHTML = related.map(createProductCard).join('');
+      else relRow.innerHTML = '<p style="color:var(--text-muted);padding:20px;">Aucun produit similaire.</p>';
+    });
+
+    function changeQty(delta) {
+      qty = Math.max(1, qty + delta);
+      document.getElementById('qtyDisplay').textContent = qty;
+    }
+
+    function addToCartDetail(id) {
+      for (let i = 0; i < qty; i++) addToCart(id);
+    }
+  </script>
+</body>
+</html>

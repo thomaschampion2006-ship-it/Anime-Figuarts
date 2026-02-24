@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commande – Anime Figuarts</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="logo-img"
+             onerror="this.outerHTML='<div class=\'logo-text\'><span class=\'logo-top\'>Anime</span><span class=\'logo-bottom\'>Figuarts</span></div>'" />
+      </a>
+      <form class="search-form" onsubmit="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Rechercher..." class="search-input" />
+        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+      </form>
+      <div class="header-actions">
+        <a href="account.html" class="header-icon" id="accountLink" title="Mon compte"><i class="fas fa-user"></i></a>
+        <a href="cart.html" class="header-icon cart-icon" title="Panier">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="products.html?category=new" class="nav-link">NOUVEAUTÉS</a></li>
+        <li><a href="figurines.html" class="nav-link">FIGURINES</a></li>
+        <li><a href="pokemon.html" class="nav-link">POKÉMON</a></li>
+        <li><a href="katanas.html" class="nav-link">KATANAS</a></li>
+        <li><a href="products.html?category=librairie" class="nav-link">LIBRAIRIE</a></li>
+        <li><a href="products.html?category=goodies" class="nav-link">GOODIES</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="checkout-page">
+    <!-- ÉTAPES -->
+    <div class="checkout-steps">
+      <div class="step active" id="step1-indicator"><span>1</span> Livraison</div>
+      <div class="step-sep"></div>
+      <div class="step" id="step2-indicator"><span>2</span> Paiement</div>
+      <div class="step-sep"></div>
+      <div class="step" id="step3-indicator"><span>3</span> Confirmation</div>
+    </div>
+
+    <div class="checkout-layout">
+      <!-- FORMULAIRES -->
+      <div class="checkout-forms">
+        <!-- ÉTAPE 1 : LIVRAISON -->
+        <div class="checkout-step-panel active" id="panel1">
+          <h2 class="checkout-panel-title"><i class="fas fa-truck"></i> Adresse de livraison</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prénom *</label>
+              <input type="text" id="firstName" placeholder="Naruto" required />
+            </div>
+            <div class="form-group">
+              <label>Nom *</label>
+              <input type="text" id="lastName" placeholder="Uzumaki" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="email" placeholder="naruto@konoha.jp" required />
+          </div>
+          <div class="form-group">
+            <label>Adresse *</label>
+            <input type="text" id="address" placeholder="12 rue de Konoha" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Code postal *</label>
+              <input type="text" id="zip" placeholder="75001" required />
+            </div>
+            <div class="form-group">
+              <label>Ville *</label>
+              <input type="text" id="city" placeholder="Paris" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" id="phone" placeholder="06 00 00 00 00" />
+          </div>
+          <p id="step1Error" class="auth-error"></p>
+          <button class="btn-checkout-next" onclick="goToStep2()">
+            Continuer vers le paiement <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- ÉTAPE 2 : PAIEMENT -->
+        <div class="checkout-step-panel" id="panel2">
+          <h2 class="checkout-panel-title"><i class="fas fa-credit-card"></i> Paiement sécurisé</h2>
+          <div style="background:#e8f5e9;color:var(--green);font-size:13px;font-weight:600;padding:10px 14px;border-radius:8px;margin-bottom:20px;display:flex;align-items:center;gap:8px">
+            <i class="fas fa-lock"></i> Paiement 100% sécurisé – Vos données sont protégées
+          </div>
+          <div class="form-group">
+            <label>Titulaire de la carte *</label>
+            <input type="text" id="cardName" placeholder="NARUTO UZUMAKI" required />
+          </div>
+          <div class="form-group">
+            <label>Numéro de carte *</label>
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date d'expiration *</label>
+              <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" oninput="formatExpiry(this)" required />
+            </div>
+            <div class="form-group">
+              <label>CVV *</label>
+              <input type="text" id="cardCvv" placeholder="123" maxlength="4" required />
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin:14px 0;font-size:2rem;color:var(--text-muted)">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-cc-amex"></i>
+          </div>
+          <p id="step2Error" class="auth-error"></p>
+          <div style="display:flex;gap:10px">
+            <button class="btn-back" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Retour</button>
+            <button class="btn-checkout-next" style="flex:1" onclick="placeOrder()">
+              <i class="fas fa-check"></i> Passer la commande
+            </button>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 3 : CONFIRMATION -->
+        <div class="checkout-step-panel" id="panel3">
+          <div class="confirmation-box">
+            <div class="confirm-icon"><i class="fas fa-check-circle"></i></div>
+            <h2>Commande confirmée !</h2>
+            <p class="confirm-sub">Merci pour votre achat. Vous recevrez un email de confirmation.</p>
+            <p id="orderId" style="font-size:13px;color:var(--text-muted);margin-bottom:24px"></p>
+            <div class="confirm-actions">
+              <a href="account.html" class="btn-primary"><i class="fas fa-user"></i> Mes commandes</a>
+              <a href="products.html" class="btn-secondary"><i class="fas fa-store"></i> Continuer mes achats</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RÉCAPITULATIF -->
+      <div class="checkout-summary" id="checkoutSummary">
+        <h3 class="summary-title">Votre commande</h3>
+        <div id="summaryItems"></div>
+        <hr class="summary-hr" />
+        <div class="summary-row"><span>Sous-total</span><span id="sumSubtotal">0 €</span></div>
+        <div class="summary-row"><span>Livraison</span><span id="sumShipping">0 €</span></div>
+        <hr class="summary-hr" />
+        <div class="summary-total"><span>Total</span><span id="sumTotal">0 €</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    let currentStep = 1;
+
+    function goToStep(n) {
+      currentStep = n;
+      document.querySelectorAll('.checkout-step-panel').forEach((p, i) => {
+        p.classList.toggle('active', i + 1 === n);
+      });
+      document.querySelectorAll('.checkout-steps .step').forEach((s, i) => {
+        s.classList.remove('active', 'done');
+        if (i + 1 === n) s.classList.add('active');
+        if (i + 1 < n)  s.classList.add('done');
+      });
+    }
+
+    function goToStep2() {
+      const fields = ['firstName', 'lastName', 'email', 'address', 'zip', 'city'];
+      const err = document.getElementById('step1Error');
+      for (const f of fields) {
+        if (!document.getElementById(f).value.trim()) {
+          err.textContent = 'Veuillez remplir tous les champs obligatoires.';
+          return;
+        }
+      }
+      err.textContent = '';
+      goToStep(2);
+    }
+
+    function placeOrder() {
+      const fields = ['cardName', 'cardNumber', 'cardExpiry', 'cardCvv'];
+      const err = document.getElementById('step2Error');
+      for (const f of fields) {
+        if (!document.getElementById(f).value.trim()) {
+          err.textContent = 'Veuillez remplir tous les champs de paiement.';
+          return;
+        }
+      }
+      err.textContent = '';
+      const orderId = 'AF-' + Date.now().toString().slice(-8).toUpperCase();
+      document.getElementById('orderId').textContent = `Commande n° ${orderId}`;
+
+      // Sauvegarder commande dans l'historique (localStorage)
+      const cart = getCart();
+      const subtotal = getCartSubtotal();
+      const user = getUser();
+      const orders = JSON.parse(localStorage.getItem('af_orders') || '[]');
+      orders.unshift({ id: orderId, date: new Date().toLocaleDateString('fr-FR'), items: cart, total: subtotal, status: 'En cours' });
+      localStorage.setItem('af_orders', JSON.stringify(orders));
+
+      clearCart();
+      goToStep(3);
+    }
+
+    function formatCard(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      input.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    function formatExpiry(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+      input.value = v;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const cart = getCart();
+      const enriched = cart.map(i => ({ ...i, product: getProductById(i.productId) })).filter(i => i.product);
+      const subtotal = enriched.reduce((s, i) => s + i.product.price * i.quantity, 0);
+      const shipping = subtotal >= 80 ? 0 : 5.99;
+      const total    = subtotal + shipping;
+
+      document.getElementById('summaryItems').innerHTML = enriched.map(i =>
+        `<div class="checkout-item">
+          <span>${escHtml(i.product.name)} <em>x${i.quantity}</em></span>
+          <span>${(i.product.price * i.quantity).toFixed(2)} €</span>
+        </div>`
+      ).join('');
+      document.getElementById('sumSubtotal').textContent = subtotal.toFixed(2) + ' €';
+      document.getElementById('sumShipping').textContent = shipping === 0 ? 'Gratuite' : shipping.toFixed(2) + ' €';
+      document.getElementById('sumTotal').textContent = total.toFixed(2) + ' €';
+
+      // Pré-remplir si connecté
+      const user = getUser();
+      if (user) {
+        if (document.getElementById('firstName')) document.getElementById('firstName').value = user.firstName || '';
+        if (document.getElementById('lastName'))  document.getElementById('lastName').value  = user.lastName  || '';
+        if (document.getElementById('email'))     document.getElementById('email').value     = user.email     || '';
+      }
+    });
+  </script>
+</body>
+</html>

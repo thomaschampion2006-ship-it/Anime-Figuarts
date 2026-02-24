@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S.H. Figuarts – Anime Figuarts</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="logo-img"
+             onerror="this.outerHTML='<div class=\'logo-text\'><span class=\'logo-top\'>Anime</span><span class=\'logo-bottom\'>Figuarts</span></div>'" />
+      </a>
+      <form class="search-form" onsubmit="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Rechercher..." class="search-input" />
+        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+      </form>
+      <div class="header-actions">
+        <a href="account.html" class="header-icon" id="accountLink" title="Mon compte"><i class="fas fa-user"></i></a>
+        <a href="cart.html" class="header-icon cart-icon" title="Panier">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="products.html?category=new" class="nav-link">NOUVEAUTÉS</a></li>
+        <li><a href="figurines.html" class="nav-link active">FIGURINES</a></li>
+        <li><a href="pokemon.html" class="nav-link">POKÉMON</a></li>
+        <li><a href="katanas.html" class="nav-link">KATANAS</a></li>
+        <li><a href="products.html?category=librairie" class="nav-link">LIBRAIRIE</a></li>
+        <li><a href="products.html?category=goodies" class="nav-link">GOODIES</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO FIGURINES -->
+  <div class="page-hero" style="background:linear-gradient(135deg,#1a237e,#3949ab)">
+    <h1 class="page-hero-title"><i class="fas fa-user-astronaut" style="margin-right:12px"></i>S.H. Figuarts</h1>
+    <p class="page-hero-sub">Figurines articulées officielles Bandai Tamashii Nations</p>
+  </div>
+
+  <!-- INFO BANDEAU -->
+  <div style="background:rgba(255,255,255,0.7);border-bottom:1px solid var(--border);padding:12px 32px">
+    <div style="max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:28px;flex-wrap:wrap;font-size:13px;color:var(--text-muted)">
+      <span><i class="fas fa-award" style="color:var(--accent);margin-right:6px"></i>Marque officielle Bandai</span>
+      <span><i class="fas fa-cogs" style="color:var(--accent);margin-right:6px"></i>Multiples articulations</span>
+      <span><i class="fas fa-box-open" style="color:var(--accent);margin-right:6px"></i>Accessoires inclus</span>
+      <span><i class="fas fa-shield-alt" style="color:var(--accent);margin-right:6px"></i>Produits officiels sous licence</span>
+    </div>
+  </div>
+
+  <div class="products-page">
+    <!-- FILTRES -->
+    <aside class="filters-sidebar">
+      <h3 class="filters-title"><i class="fas fa-filter"></i> Filtres</h3>
+      <div class="filter-group">
+        <p class="filter-group-title">Univers</p>
+        <ul class="filter-list">
+          <li><label><input type="checkbox" class="filter-universe" value="Dragon Ball" checked /> Dragon Ball</label></li>
+          <li><label><input type="checkbox" class="filter-universe" value="One Piece" checked /> One Piece</label></li>
+          <li><label><input type="checkbox" class="filter-universe" value="Naruto" checked /> Naruto</label></li>
+          <li><label><input type="checkbox" class="filter-universe" value="My Hero Academia" checked /> My Hero Academia</label></li>
+          <li><label><input type="checkbox" class="filter-universe" value="Jujutsu" checked /> Jujutsu Kaisen</label></li>
+        </ul>
+      </div>
+      <div class="filter-group">
+        <p class="filter-group-title">Trier par</p>
+        <select class="filter-select" id="sortSelect">
+          <option value="default">Par défaut</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="new">Nouveautés d'abord</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-check" style="cursor:pointer">
+          <input type="checkbox" id="filterNew" style="accent-color:var(--accent)" />
+          <span>Nouveautés seulement</span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- GRILLE -->
+    <main class="products-main">
+      <div class="products-toolbar">
+        <p class="products-count" id="productsCount">Chargement…</p>
+      </div>
+      <div class="products-grid" id="productsGrid">
+        <div class="loading-full" style="grid-column:1/-1"><i class="fas fa-spinner fa-spin"></i></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SECTION INFO -->
+  <section style="background:rgba(255,255,255,0.6);padding:40px 32px;margin-top:20px;border-top:1px solid var(--border)">
+    <div style="max-width:1000px;margin:0 auto;text-align:center">
+      <h2 style="font-size:1.4rem;font-weight:800;color:var(--primary);margin-bottom:12px">Qu'est-ce que les S.H. Figuarts ?</h2>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.7;max-width:700px;margin:0 auto">
+        Les S.H. Figuarts sont des figurines articulées de haute qualité produites par Bandai sous la marque Tamashii Nations.
+        Chaque figurine est dotée de nombreux points d'articulation pour reproduire des poses dynamiques,
+        et est livrée avec des accessoires exclusifs (mains interchangeables, effets, armes...).
+      </p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><img src="image fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="footer-logo-img" onerror="this.style.display='none'"></div>
+      <div>
+        <h4 class="footer-section-title">À propos de nous :</h4>
+        <ul class="footer-links">
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Notre histoire</a></li>
+          <li><a href="#">Qui sommes nous ?</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-section-title footer-fidelite-title">programme de fidélité :</h4>
+        <ul class="footer-fidelite-list">
+          <li><i class="fas fa-star"></i> 1€ de bon offert tous les 20 euros dépensés</li>
+          <li><i class="fas fa-gift"></i> code carte cadeau mystère après 70€ dépensé</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Anime Figuarts. Tous droits réservés.</div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    let base = getProductsByCategory('sh-figuarts');
+
+    function applyFilters() {
+      const checked  = [...document.querySelectorAll('.filter-universe:checked')].map(c => c.value);
+      const onlyNew  = document.getElementById('filterNew').checked;
+      const sort     = document.getElementById('sortSelect').value;
+
+      let list = base.filter(p =>
+        checked.some(u => p.series.includes(u)) &&
+        (!onlyNew || p.isNew)
+      );
+
+      if (sort === 'price-asc')  list.sort((a, b) => a.price - b.price);
+      if (sort === 'price-desc') list.sort((a, b) => b.price - a.price);
+      if (sort === 'new')        list.sort((a, b) => b.isNew - a.isNew);
+
+      const grid  = document.getElementById('productsGrid');
+      const count = document.getElementById('productsCount');
+      count.textContent = `${list.length} figurine${list.length > 1 ? 's' : ''}`;
+
+      if (!list.length) {
+        grid.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><p>Aucune figurine trouvée.</p></div>';
+      } else {
+        grid.innerHTML = list.map(createProductCard).join('');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyFilters();
+      document.querySelectorAll('.filter-universe').forEach(c => c.addEventListener('change', applyFilters));
+      document.getElementById('sortSelect').addEventListener('change', applyFilters);
+      document.getElementById('filterNew').addEventListener('change', applyFilters);
+    });
+  </script>
+</body>
+</html>
