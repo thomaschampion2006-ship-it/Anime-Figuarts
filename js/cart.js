@@ -64,9 +64,4 @@ function updateCartBadge() {
   badge.style.display = total > 0 ? 'flex' : 'none';
 }
 
-function animateCartIcon() {
-  const icon = document.querySelector('.cart-icon');
-  if (!icon) return;
-  icon.classList.add('cart-bounce');
-  setTimeout(() => icon.classList.remove('cart-bounce'), 400);
-}
+
