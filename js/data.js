@@ -170,5 +170,7 @@ function searchProducts(query) {
     p.description.toLowerCase().includes(q)
   );
 }
-
+function getNewProducts() {
+  return PRODUCTS.filter(p => p.isNew);
+}
 
