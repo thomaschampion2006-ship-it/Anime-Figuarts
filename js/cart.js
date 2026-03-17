@@ -1,7 +1,3 @@
-// ====================================
-// ANIME FIGUARTS - Gestion du Panier
-// ====================================
-
 const CART_KEY = 'anime_figuarts_cart';
 
 function getCart() {
