@@ -1,7 +1,3 @@
-// ====================================
-// ANIME FIGUARTS - Authentification
-// ====================================
-
 const USER_KEY = 'af_user';
 
 function getUser() {
