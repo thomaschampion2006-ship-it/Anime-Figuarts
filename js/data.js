@@ -171,6 +171,4 @@ function searchProducts(query) {
   );
 }
 
-function getNewProducts() {
-  return PRODUCTS.filter(p => p.isNew);
-}
+
