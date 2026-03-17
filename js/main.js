@@ -1,8 +1,3 @@
-// ====================================
-// ANIME FIGUARTS - Script Principal
-// ====================================
-
-// ---- TOAST ----
 function showToast(message, type = 'success') {
   const toast = document.getElementById('toast');
   if (!toast) return;
@@ -13,13 +8,13 @@ function showToast(message, type = 'success') {
   toast._timer = setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ---- SCROLL DE RANGÉE ----
+
 function scrollRow(rowId, direction) {
   const row = document.getElementById(rowId);
   if (row) row.scrollBy({ left: direction * 680, behavior: 'smooth' });
 }
 
-// ---- BUILDER CARTE PRODUIT ----
+-
 function createProductCard(product) {
   const imgSrc = product.image ? encodeImagePath(product.image) : null;
   const hasOld = product.oldPrice && product.oldPrice > product.price;
@@ -53,7 +48,7 @@ function goToProduct(id) {
   window.location.href = `product-detail.html?id=${id}`;
 }
 
-// ---- CHARGEMENT RANGÉE ----
+
 function loadProductRow(category, rowId, limit) {
   const row = document.getElementById(rowId);
   if (!row) return;
@@ -68,7 +63,7 @@ function loadProductRow(category, rowId, limit) {
   row.innerHTML = products.map(createProductCard).join('');
 }
 
-// ---- UTILITAIRES ----
+
 function encodeImagePath(path) {
   // Encode chaque segment du chemin séparément
   return path.split('/').map(s => encodeURIComponent(s)).join('/');
@@ -123,7 +118,7 @@ function addCartBounceStyle() {
   document.head.appendChild(s);
 }
 
-// ---- RECHERCHE ----
+
 function handleSearch(e) {
   e.preventDefault();
   const q = document.getElementById('searchInput').value.trim();
