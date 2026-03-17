@@ -1,9 +1,6 @@
-// ====================================
-// ANIME FIGUARTS - Données produits
-// ====================================
+
 
 const PRODUCTS = [
-  // ===== S.H. FIGUARTS =====
   { id: 1, name: "Gohan SSJ2", series: "Dragon Ball Z", category: "sh-figuarts", price: 70, oldPrice: null, isNew: false, stock: 8,
     image: "S.H Figuarts/Gohan ssj2 S.H Figuarts.webp",
     description: "Figurine articulée S.H.Figuarts de Gohan en Super Saiyan 2, réplique officielle Bandai Tamashii Nations avec accessoires.",
@@ -100,7 +97,7 @@ const PRODUCTS = [
     description: "Statue de Zoro en pose de combat avec ses trois katanas, rendu détaillé et base diorama.",
     specs: ["Hauteur: 23cm", "Matière: Résine", "Peint: Oui", "Diorama: Oui"] },
 
-  // ===== KATANAS =====
+
   { id: 20, name: "Katana Premium I", series: "Katana Collection", category: "katanas", price: 90, oldPrice: null, isNew: false, stock: 5,
     image: "Katanas/katana 1.webp",
     description: "Katana de collection forgé à la main, lame en acier inoxydable et tsuka en bois laqué.",
@@ -152,21 +149,21 @@ const PRODUCTS = [
     specs: ["Longueur totale: 106cm", "Tsuba: Fer forgé", "Trempe: Eau", "Qualité: Prestige"] },
 ];
 
-// Récupérer tous les produits
+
 function getAllProducts() { return PRODUCTS; }
 
-// Récupérer par catégorie
+
 function getProductsByCategory(cat) {
   if (!cat || cat === 'all') return PRODUCTS;
   return PRODUCTS.filter(p => p.category === cat);
 }
 
-// Récupérer par ID
+
 function getProductById(id) {
   return PRODUCTS.find(p => p.id === parseInt(id));
 }
 
-// Rechercher
+
 function searchProducts(query) {
   const q = query.toLowerCase();
   return PRODUCTS.filter(p =>
@@ -176,7 +173,6 @@ function searchProducts(query) {
   );
 }
 
-// Nouveautés
 function getNewProducts() {
   return PRODUCTS.filter(p => p.isNew);
 }
