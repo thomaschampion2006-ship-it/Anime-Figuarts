@@ -1,5 +1,3 @@
-
-
 const PRODUCTS = [
   { id: 1, name: "Gohan SSJ2", series: "Dragon Ball Z", category: "sh-figuarts", price: 70, oldPrice: null, isNew: false, stock: 8,
     image: "S.H Figuarts/Gohan ssj2 S.H Figuarts.webp",
