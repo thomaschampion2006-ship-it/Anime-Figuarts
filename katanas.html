@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katanas – Anime Figuarts</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image_fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="logo-img"
+             onerror="this.outerHTML='<div class=\'logo-text\'><span class=\'logo-top\'>Anime</span><span class=\'logo-bottom\'>Figuarts</span></div>'" />
+      </a>
+      <form class="search-form" onsubmit="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Rechercher..." class="search-input" />
+        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+      </form>
+      <div class="header-actions">
+        <a href="account.html" class="header-icon" id="accountLink" title="Mon compte"><i class="fas fa-user"></i></a>
+        <a href="cart.html" class="header-icon cart-icon" title="Panier">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="products.html?category=new" class="nav-link">NOUVEAUTÉS</a></li>
+        <li><a href="figurines.html" class="nav-link">FIGURINES</a></li>
+        <li><a href="pokemon.html" class="nav-link">POKÉMON</a></li>
+        <li><a href="katanas.html" class="nav-link active">KATANAS</a></li>
+        <li><a href="products.html?category=librairie" class="nav-link">LIBRAIRIE</a></li>
+        <li><a href="products.html?category=goodies" class="nav-link">GOODIES</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="page-hero" style="background:linear-gradient(135deg,#1a1a2e,#2c1810)">
+    <h1 class="page-hero-title" style="font-size:2.4rem">⚔️ Katanas</h1>
+    <p class="page-hero-sub">Répliques officielles et katanas de collection</p>
+  </div>
+
+  <div style="background:rgba(255,255,255,0.7);border-bottom:1px solid var(--border);padding:12px 32px">
+    <div style="max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:28px;flex-wrap:wrap;font-size:13px;color:var(--text-muted)">
+      <span><i class="fas fa-tools" style="color:var(--accent);margin-right:6px"></i>Forgés à la main</span>
+      <span><i class="fas fa-shield-alt" style="color:var(--accent);margin-right:6px"></i>Acier inoxydable premium</span>
+      <span><i class="fas fa-certificate" style="color:var(--accent);margin-right:6px"></i>Répliques officielles sous licence</span>
+      <span><i class="fas fa-home" style="color:var(--accent);margin-right:6px"></i>Usage décoratif uniquement</span>
+    </div>
+  </div>
+
+  <div class="products-page">
+    <aside class="filters-sidebar">
+      <h3 class="filters-title"><i class="fas fa-filter"></i> Filtres</h3>
+      <div class="filter-group">
+        <p class="filter-group-title">Série</p>
+        <ul class="filter-list">
+          <li><label><input type="radio" name="serieFilter" value="all" checked /> Toutes les séries</label></li>
+          <li><label><input type="radio" name="serieFilter" value="Demon Slayer" /> Demon Slayer</label></li>
+          <li><label><input type="radio" name="serieFilter" value="One Piece" /> One Piece</label></li>
+          <li><label><input type="radio" name="serieFilter" value="Katana Collection" /> Collection</label></li>
+          <li><label><input type="radio" name="serieFilter" value="Samouraï" /> Samouraï Historique</label></li>
+        </ul>
+      </div>
+      <div class="filter-group">
+        <p class="filter-group-title">Budget</p>
+        <select class="filter-select" id="budgetSelect">
+          <option value="all">Tous les prix</option>
+          <option value="100">Moins de 100€</option>
+          <option value="130">Moins de 130€</option>
+          <option value="200">Moins de 200€</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <p class="filter-group-title">Trier par</p>
+        <select class="filter-select" id="sortSelect">
+          <option value="default">Par défaut</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="new">Nouveautés d'abord</option>
+        </select>
+      </div>
+    </aside>
+
+    <main class="products-main">
+      <div class="products-toolbar">
+        <p class="products-count" id="productsCount">Chargement…</p>
+      </div>
+      <div class="products-grid" id="productsGrid">
+        <div class="loading-full" style="grid-column:1/-1"><i class="fas fa-spinner fa-spin"></i></div>
+      </div>
+    </main>
+  </div>
+
+  <div style="background:#fff8e1;border-top:2px solid #ffe082;padding:16px 32px;margin-top:10px">
+    <div style="max-width:1400px;margin:0 auto;display:flex;align-items:flex-start;gap:12px;font-size:13px;color:#7d5a00">
+      <i class="fas fa-exclamation-triangle" style="font-size:1.2rem;color:#ffd600;flex-shrink:0;margin-top:2px"></i>
+      <div>
+        <strong>Avertissement légal :</strong> Tous les katanas vendus sur Anime Figuarts sont destinés exclusivement
+        à un usage décoratif et de collection. La vente est réservée aux personnes majeures (+18 ans).
+        L'utilisation à des fins autres que décoratives est strictement interdite.
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><img src="image_fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="footer-logo-img" onerror="this.style.display='none'"></div>
+      <div>
+        <h4 class="footer-section-title">À propos de nous :</h4>
+        <ul class="footer-links">
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Notre histoire</a></li>
+          <li><a href="#">Qui sommes nous ?</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-section-title footer-fidelite-title">programme de fidélité :</h4>
+        <ul class="footer-fidelite-list">
+          <li><i class="fas fa-star"></i> 1€ de bon offert tous les 20 euros dépensés</li>
+          <li><i class="fas fa-gift"></i> code carte cadeau mystère après 70€ dépensé</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Anime Figuarts. Tous droits réservés.</div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const base = getProductsByCategory('katanas');
+
+    function applyFilters() {
+      const serie  = document.querySelector('input[name="serieFilter"]:checked').value;
+      const budget = document.getElementById('budgetSelect').value;
+      const sort   = document.getElementById('sortSelect').value;
+
+      let list = base.filter(p =>
+        (serie === 'all' || p.series.includes(serie)) &&
+        (budget === 'all' || p.price < parseInt(budget))
+      );
+
+      if (sort === 'price-asc')  list.sort((a, b) => a.price - b.price);
+      if (sort === 'price-desc') list.sort((a, b) => b.price - a.price);
+      if (sort === 'new')        list.sort((a, b) => b.isNew - a.isNew);
+
+      const grid  = document.getElementById('productsGrid');
+      const count = document.getElementById('productsCount');
+      count.textContent = `${list.length} katana${list.length > 1 ? 's' : ''}`;
+
+      grid.innerHTML = list.length
+        ? list.map(createProductCard).join('')
+        : '<div class="no-results"><i class="fas fa-search"></i><p>Aucun katana trouvé.</p></div>';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyFilters();
+      document.querySelectorAll('input[name="serieFilter"]').forEach(r => r.addEventListener('change', applyFilters));
+      document.getElementById('budgetSelect').addEventListener('change', applyFilters);
+      document.getElementById('sortSelect').addEventListener('change', applyFilters);
+    });
+  </script>
+</body>
+</html>
