@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscription – Anime Figuarts</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image_fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="logo-img" />
+      </a>
+    </div>
+  </header>
+
+  <div class="auth-page">
+
+    <div class="auth-container">
+
+      <div class="auth-logo-wrap">
+        <span style="font-weight:800;font-size:1.2rem;">Créer un compte</span>
+      </div>
+
+      <h2 class="auth-title">Inscription</h2>
+
+      <!-- FORMULAIRE REGISTER -->
+      <form action="register.php" method="POST" class="auth-form">
+
+        <div class="form-row">
+
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" name="first_name" placeholder="Naruto" required />
+          </div>
+
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" name="last_name" placeholder="Uzumaki" required />
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="naruto@konoha.jp" required />
+        </div>
+
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" name="password" placeholder="Min. 6 caractères" required minlength="6" />
+        </div>
+
+        <button type="submit" class="btn-auth">
+          <i class="fas fa-user-plus"></i> Créer mon compte
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
