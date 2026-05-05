@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion – Anime Figuarts</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- HEADER RESTAURÉ : Logo + Recherche + Icônes -->
+  <header class="header">
+    <div class="header-inner">
+      <!-- Remplacement de index.php par index.html -->
+      <a href="index.html" class="logo">
+        <img src="image_fond/capture_d_%C3%A9cran__anime_figuarts-removebg-preview.png" alt="Anime Figuarts" class="logo-img" />
+      </a>
+      <form class="search-form">
+        <input type="text" id="searchInput" placeholder="Rechercher..." class="search-input" />
+        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+      </form>
+      <div class="header-actions">
+        <!-- Remplacement de account.php par account.html -->
+        <a href="account.html" class="header-icon" title="Mon compte"><i class="fas fa-user"></i></a>
+        <a href="cart.html" class="header-icon" title="Panier"><i class="fas fa-shopping-cart"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="auth-page">
+    <div class="auth-container">
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Se connecter</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">S'inscrire</button>
+      </div>
+
+      <!-- FORMULAIRE DE CONNEXION -->
+      <div id="formLogin">
+        <h2 class="auth-title">Bon retour !</h2>
+        <!-- Attention : cliquer sur ce bouton tentera aussi de télécharger login.php si vous n'avez pas de serveur -->
+        <form action="account.html" method="GET" class="auth-form">
+          <input type="hidden" name="action" value="login">
+          <div class="form-group">
+            <label>Adresse email</label>
+            <div class="input-icon">
+              <input type="email" name="email" placeholder="naruto@konoha.jp" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label>
+            <div class="input-icon">
+              <i class="fas fa-lock"></i>
+              <input type="password" name="password" placeholder="••••••••" required />
+            </div>
+          </div>
+          <button type="submit" class="btn-auth">
+            <i class="fas fa-sign-in-alt"></i> Se connecter
+          </button>
+        </form>
+      </div>
+
+      <!-- FORMULAIRE D'INSCRIPTION -->
+      <div id="formRegister" style="display:none">
+        <h2 class="auth-title">Créer un compte</h2>
+        <!-- Attention : cliquer sur ce bouton tentera aussi de télécharger login.php si vous n'avez pas de serveur -->
+        <form action="login.php" method="GET" class="auth-form">
+          <input type="hidden" name="action" value="register">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prénom</label>
+              <input type="text" name="first_name" placeholder="Naruto" required />
+            </div>
+            <div class="form-group">
+              <label>Nom</label>
+              <input type="text" name="last_name" placeholder="Uzumaki" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="naruto@konoha.jp" required />
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label>
+            <input type="password" name="password" placeholder="Min. 6 caractères" required minlength="6" />
+          </div>
+          <button type="submit" class="btn-auth">
+            <i class="fas fa-user-plus"></i> Créer mon compte
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- BANNIÈRE BLEUE RESTAURÉE : Texte + Icônes -->
+    <div class="auth-banner">
+      <div class="auth-banner-content">
+        <h3>Rejoignez la communauté Anime Figuarts !</h3>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Suivez vos commandes en temps réel</li>
+          <li><i class="fas fa-check-circle"></i> Accédez à des précommandes exclusives</li>
+          <li><i class="fas fa-check-circle"></i> Cumulez des points de fidélité</li>
+          <li><i class="fas fa-check-circle"></i> Liste de souhaits personnalisée</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+      document.getElementById('formLogin').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('formRegister').style.display = tab === 'register' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
